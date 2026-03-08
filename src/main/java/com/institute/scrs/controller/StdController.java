@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/students")
@@ -53,4 +55,14 @@ public class StdController {
     public ResponseEntity<List<Student>> filter(@RequestParam String crsName) {
         return ResponseEntity.ok(stdService.filterByCourse(crsName));
     }
+    @GetMapping("/stats")
+public ResponseEntity<Map<String, Long>> getStdStats() {
+    Map<String, Long> stats = new HashMap<>();
+    List<Student> all = stdService.getAllStudents();
+    stats.put("totalStudents", (long) all.size());
+    stats.put("activeStudents", all.stream()
+            .filter(s -> s.getStatus() == Student.StdStatus.ACTIVE)
+            .count());
+    return ResponseEntity.ok(stats);
+}
 }

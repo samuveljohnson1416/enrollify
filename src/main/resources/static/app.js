@@ -1,6 +1,15 @@
 const API = "http://localhost:8080/api";
 
-// ── SECTION TOGGLE ──
+async function loadStats() {
+    const crsStats = await fetch(`${API}/courses/stats`).then(r => r.json());
+    const stdStats = await fetch(`${API}/students/stats`).then(r => r.json());
+
+    document.getElementById("statCourses").textContent = crsStats.totalCourses;
+    document.getElementById("statStudents").textContent = stdStats.totalStudents;
+    document.getElementById("statActive").textContent = stdStats.activeStudents;
+    document.getElementById("statSeats").textContent = crsStats.totalSeats;
+}
+
 function showSection(name) {
     document.getElementById("courses").classList.add("hidden");
     document.getElementById("students").classList.add("hidden");
@@ -9,7 +18,7 @@ function showSection(name) {
     if (name === "students") { loadStudents(); loadCoursesDropdown(); }
 }
 
-// ── TOAST ──
+
 function showToast(msg, type = "success") {
     const t = document.getElementById("toast");
     t.textContent = msg;
@@ -17,7 +26,7 @@ function showToast(msg, type = "success") {
     setTimeout(() => t.classList.add("hidden"), 3000);
 }
 
-// ── VALIDATION ──
+
 function validateCourse() {
     const name = document.getElementById("crsName").value.trim();
     const dur = document.getElementById("crsDuration").value;
@@ -40,9 +49,6 @@ function validateStudent() {
     return true;
 }
 
-// ──────────────────────────────────────────
-// COURSES
-// ──────────────────────────────────────────
 async function loadCourses() {
     const res = await fetch(`${API}/courses`);
     const data = await res.json();
@@ -63,6 +69,8 @@ async function loadCourses() {
             </td>
         </tr>`;
     });
+
+    loadStats();
 }
 
 function showCrsForm() {
@@ -104,6 +112,7 @@ async function saveCourse() {
     } else {
         showToast("Something went wrong", "error");
     }
+    loadStats();
 }
 
 async function editCourse(id) {
@@ -126,13 +135,12 @@ async function deleteCourse(id) {
     else showToast("Cannot delete", "error");
 }
 
-// ──────────────────────────────────────────
-// STUDENTS
-// ──────────────────────────────────────────
+
 async function loadStudents() {
     const res = await fetch(`${API}/students`);
     const data = await res.json();
     renderStudents(data);
+    loadStats();
 }
 
 function renderStudents(data) {
@@ -249,5 +257,6 @@ async function filterStudents() {
     renderStudents(data);
 }
 
-// ── LOAD COURSES ON START ──
+
 loadCourses();
+loadStats();

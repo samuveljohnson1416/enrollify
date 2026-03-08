@@ -1,5 +1,4 @@
 package com.institute.scrs.controller;
-
 import com.institute.scrs.model.Course;
 import com.institute.scrs.service.CrsService;
 import jakarta.validation.Valid;
@@ -7,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/courses")
@@ -43,4 +44,12 @@ public class CrsController {
         crsService.deleteCourse(id);
         return ResponseEntity.ok("Course deleted successfully");
     }
+    @GetMapping("/stats")
+public ResponseEntity<Map<String, Long>> getStats() {
+    Map<String, Long> stats = new HashMap<>();
+    stats.put("totalCourses", crsService.getAllCourses().size() + 0L);
+    stats.put("totalSeats", crsService.getAllCourses()
+            .stream().mapToLong(c -> c.getAvailableSeats()).sum());
+    return ResponseEntity.ok(stats);
+}
 }

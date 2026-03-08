@@ -329,3 +329,41 @@ tbody tr:hover {
 }
 
 .hidden { display: none !important; }
+
+/* STATS BAR */
+.stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 24px;
+    flex-wrap: wrap;
+}
+.stat-card {
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 20px 36px;
+    text-align: center;
+    min-width: 160px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    transition: all 0.3s;
+}
+.stat-card:hover {
+    background: rgba(255,255,255,0.07);
+    transform: translateY(-3px);
+}
+.stat-num {
+    font-size: 36px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 6px;
+}
+.stat-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
