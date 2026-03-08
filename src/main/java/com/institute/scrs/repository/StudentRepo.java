@@ -11,4 +11,5 @@ public interface StudentRepo extends JpaRepository<Student, Long> {
     List<Student> findByStdNameContainingIgnoreCase(String stdName);
 
     List<Student> findByCrs_CrsName(String crsName);
+    boolean existsByEmail(String email);
 }

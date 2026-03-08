@@ -27,23 +27,22 @@ public class StdService {
     }
 
     public Student addStudent(Student std) {
-        // Validate that a course is provided
-        if (std.getCrs() == null || std.getCrs().getId() == null) {
-            throw new RuntimeException("Course is required to add a student");
-        }
 
-        Course crs = crsService.getCrsById(std.getCrs().getId());
+         if (stdRepo.existsByEmail(std.getEmail())) {
+        throw new RuntimeException("Email already registered!");
+    }
 
-        // seat check — this is the key business logic
-        if (crs.getAvailableSeats() <= 0) {
-            throw new RuntimeException("No seats available in: " + crs.getCrsName());
-        }
+   
+    Course crs = crsService.getCrsById(std.getCrs().getId());
+    if (crs.getAvailableSeats() <= 0) {
+        throw new RuntimeException("No seats available in: " + crs.getCrsName());
+    }
 
-        // reduce seat count by 1
+       
         crs.setAvailableSeats(crs.getAvailableSeats() - 1);
         crsService.addCourse(crs);
 
-        // set enrollment date automatically
+       
         std.setEnrollDate(LocalDate.now());
         std.setCrs(crs);
 
