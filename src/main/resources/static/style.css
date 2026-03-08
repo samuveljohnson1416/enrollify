@@ -367,3 +367,22 @@ tbody tr:hover {
     text-transform: uppercase;
     letter-spacing: 1.5px;
 }
+/* EXPORT BUTTON */
+.btn-export {
+    background: transparent;
+    color: rgba(255,255,255,0.55);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    transition: all 0.25s;
+}
+.btn-export:hover {
+    background: rgba(255,255,255,0.07);
+    color: white;
+    border-color: rgba(255,255,255,0.2);
+    transform: translateY(-1px);
+}

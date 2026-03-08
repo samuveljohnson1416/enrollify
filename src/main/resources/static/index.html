@@ -8,40 +8,42 @@
 </head>
 <body>
 
+    <!-- NAV -->
     <nav>
         <div class="nav-brand">Enrollify</div>
         <div class="nav-links">
             <button onclick="showSection('courses')">Courses</button>
             <button onclick="showSection('students')">Students</button>
         </div>
-<div id="statsBar" class="stats-bar">
-    <div class="stat-card">
-        <div class="stat-num" id="statCourses">--</div>
-        <div class="stat-label">Total Courses</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-num" id="statStudents">--</div>
-        <div class="stat-label">Total Students</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-num" id="statActive">--</div>
-        <div class="stat-label">Active Students</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-num" id="statSeats">--</div>
-        <div class="stat-label">Seats Available</div>
-    </div>
-</div>
     </nav>
 
-    <!-- ── COURSES SECTION ── -->
+    <!-- STATS BAR — outside nav -->
+    <div id="statsBar" class="stats-bar">
+        <div class="stat-card">
+            <div class="stat-num" id="statCourses">--</div>
+            <div class="stat-label">Total Courses</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-num" id="statStudents">--</div>
+            <div class="stat-label">Total Students</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-num" id="statActive">--</div>
+            <div class="stat-label">Active Students</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-num" id="statSeats">--</div>
+            <div class="stat-label">Seats Available</div>
+        </div>
+    </div>
+
+    <!-- COURSES SECTION -->
     <div id="courses" class="section">
         <div class="section-header">
             <h2>Courses</h2>
             <button class="btn-add" onclick="showCrsForm()">+ Add Course</button>
         </div>
 
-        <!-- Course Form -->
         <div id="crsForm" class="form-box hidden">
             <h3 id="crsFormTitle">Add Course</h3>
             <input type="hidden" id="crsId">
@@ -56,7 +58,6 @@
             </div>
         </div>
 
-        <!-- Course Table -->
         <table id="crsTable">
             <thead>
                 <tr>
@@ -73,14 +74,16 @@
         </table>
     </div>
 
-    <!-- ── STUDENTS SECTION ── -->
+    <!-- STUDENTS SECTION -->
     <div id="students" class="section hidden">
         <div class="section-header">
             <h2>Students</h2>
-            <button class="btn-add" onclick="showStdForm()">+ Add Student</button>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-export" onclick="exportCSV()">⬇ Export CSV</button>
+                <button class="btn-add" onclick="showStdForm()">+ Add Student</button>
+            </div>
         </div>
 
-        <!-- Search and Filter -->
         <div class="search-bar">
             <input type="text" id="searchName" placeholder="Search by name...">
             <button onclick="searchStudents()">Search</button>
@@ -89,7 +92,6 @@
             <button onclick="loadStudents()">Show All</button>
         </div>
 
-        <!-- Student Form -->
         <div id="stdForm" class="form-box hidden">
             <h3 id="stdFormTitle">Add Student</h3>
             <input type="hidden" id="stdId">
@@ -109,7 +111,6 @@
             </div>
         </div>
 
-        <!-- Student Table -->
         <table id="stdTable">
             <thead>
                 <tr>
@@ -127,7 +128,7 @@
         </table>
     </div>
 
-    <!-- Toast Notification -->
+    <!-- Toast -->
     <div id="toast" class="toast hidden"></div>
 
     <script src="app.js"></script>

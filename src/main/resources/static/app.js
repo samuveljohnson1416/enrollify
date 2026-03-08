@@ -10,12 +10,14 @@ async function loadStats() {
     document.getElementById("statSeats").textContent = crsStats.totalSeats;
 }
 
+
 function showSection(name) {
     document.getElementById("courses").classList.add("hidden");
     document.getElementById("students").classList.add("hidden");
     document.getElementById(name).classList.remove("hidden");
     if (name === "courses") loadCourses();
     if (name === "students") { loadStudents(); loadCoursesDropdown(); }
+    loadStats();
 }
 
 
@@ -255,6 +257,45 @@ async function filterStudents() {
     const res = await fetch(`${API}/students/filter?crsName=${crs}`);
     const data = await res.json();
     renderStudents(data);
+}
+async function exportCSV() {
+    const res = await fetch(`${API}/students`);
+    const data = await res.json();
+
+    if (data.length === 0) {
+        showToast("No students to export!", "error");
+        return;
+    }
+
+    // build CSV rows
+    const headers = ["ID", "Name", "Email", "Phone", 
+                     "Course", "Enrolled Date", "Status"];
+    
+    const rows = data.map(s => [
+        s.id,
+        s.stdName,
+        s.email,
+        s.phNumber || "-",
+        s.crs ? s.crs.crsName : "-",
+        s.enrollDate || "-",
+        s.status
+    ]);
+
+    // combine headers and rows
+    const csvContent = [headers, ...rows]
+        .map(row => row.join(","))
+        .join("\n");
+
+    // create download link
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "students_" + new Date().toLocaleDateString() + ".csv";
+    a.click();
+    URL.revokeObjectURL(url);
+
+    showToast("CSV downloaded!");
 }
 
 
