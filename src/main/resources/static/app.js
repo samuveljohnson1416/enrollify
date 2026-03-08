@@ -237,12 +237,13 @@ async function editStudent(id) {
 }
 
 async function deleteStudent(id) {
-    if (!confirm("Delete this student?")) return;
-    const res = await fetch(`${API}/students/${id}`, { method: "DELETE" });
-    if (res.ok) { showToast("Student deleted!"); loadStudents(); loadCoursesDropdown(); }
-    else showToast("Cannot delete", "error");
+    openModal("This student will be permanently removed.", async () => {
+        await fetch(`${API}/students/${id}`, { method: "DELETE" });
+        loadStudents();
+        loadStats();
+        showToast("Student deleted!");
+    });
 }
-
 async function searchStudents() {
     const name = document.getElementById("searchName").value.trim();
     if (!name) { loadStudents(); return; }
@@ -296,6 +297,20 @@ async function exportCSV() {
     URL.revokeObjectURL(url);
 
     showToast("CSV downloaded!");
+}
+
+
+function openModal(message, onConfirm) {
+    document.getElementById("modalMsg").textContent = message;
+    document.getElementById("modalConfirmBtn").onclick = () => {
+        onConfirm();
+        closeModal();
+    };
+    document.getElementById("deleteModal").classList.remove("hidden");
+}
+
+function closeModal() {
+    document.getElementById("deleteModal").classList.add("hidden");
 }
 
 
