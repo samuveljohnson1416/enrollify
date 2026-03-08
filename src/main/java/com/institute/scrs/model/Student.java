@@ -3,6 +3,7 @@ package com.institute.scrs.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "students")
@@ -33,6 +34,8 @@ public class Student {
 
     @ManyToOne
     @JoinColumn(name = "course_id")
+    @JsonIgnoreProperties({"duration", "crsFee", "availableSeats", 
+                        "instructorName", "crsName", "students"})
     private Course crs;
 
     public Student() {}

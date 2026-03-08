@@ -27,6 +27,11 @@ public class StdService {
     }
 
     public Student addStudent(Student std) {
+        // Validate that a course is provided
+        if (std.getCrs() == null || std.getCrs().getId() == null) {
+            throw new RuntimeException("Course is required to add a student");
+        }
+
         Course crs = crsService.getCrsById(std.getCrs().getId());
 
         // seat check — this is the key business logic

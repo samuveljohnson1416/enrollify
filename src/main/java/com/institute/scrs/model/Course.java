@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table(name = "courses")
 public class Course {
@@ -17,14 +18,14 @@ public class Course {
     private String crsName;
 
     @Min(value = 1, message = "Duration must be atleast 1 week")
-    private int duration;
+    private Integer duration;
 
     private String instructorName;
 
-    private double crsFee;
+    private Double crsFee;
 
     @Min(value = 0, message = "Seats cant be negative")
-    private int availableSeats;
+    private Integer availableSeats;
 
     @OneToMany(mappedBy = "crs", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -33,8 +34,8 @@ public class Course {
     public Course() {}
 
     public Course(String crsName, int duration,
-                  String instructorName, double crsFee,
-                  int availableSeats) {
+                  String instructorName, Double crsFee,
+                  Integer  availableSeats) {
         this.crsName = crsName;
         this.duration = duration;
         this.instructorName = instructorName;
@@ -48,16 +49,16 @@ public class Course {
     public void setCrsName(String crsName) { this.crsName = crsName; }
 
     public int getDuration() { return duration; }
-    public void setDuration(int duration) { this.duration = duration; }
+    public void setDuration(Integer  duration) { this.duration = duration; }
 
     public String getInstructorName() { return instructorName; }
     public void setInstructorName(String instructorName) { this.instructorName = instructorName; }
 
-    public double getCrsFee() { return crsFee; }
-    public void setCrsFee(double crsFee) { this.crsFee = crsFee; }
+    public double getCrsFee() { return crsFee != null ? crsFee : 0.0; }
+    public void setCrsFee(Double crsFee) { this.crsFee = crsFee; }
 
     public int getAvailableSeats() { return availableSeats; }
-    public void setAvailableSeats(int availableSeats) { this.availableSeats = availableSeats; }
+    public void setAvailableSeats(Integer availableSeats) { this.availableSeats = availableSeats; }
 
     public List<Student> getStudents() { return students; }
     public void setStudents(List<Student> students) { this.students = students; }

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrollify - Student Course Registration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav>
+        <div class="nav-brand">Enrollify</div>
+        <div class="nav-links">
+            <button onclick="showSection('courses')">Courses</button>
+            <button onclick="showSection('students')">Students</button>
+        </div>
+    </nav>
+
+    <!-- ── COURSES SECTION ── -->
+    <div id="courses" class="section">
+        <div class="section-header">
+            <h2>Courses</h2>
+            <button class="btn-add" onclick="showCrsForm()">+ Add Course</button>
+        </div>
+
+        <!-- Course Form -->
+        <div id="crsForm" class="form-box hidden">
+            <h3 id="crsFormTitle">Add Course</h3>
+            <input type="hidden" id="crsId">
+            <input type="text" id="crsName" placeholder="Course Name *">
+            <input type="number" id="crsDuration" placeholder="Duration (weeks) *">
+            <input type="text" id="crsInstructor" placeholder="Instructor Name">
+            <input type="number" id="crsFee" placeholder="Course Fee">
+            <input type="number" id="crsSeats" placeholder="Available Seats *">
+            <div class="form-btns">
+                <button class="btn-save" onclick="saveCourse()">Save</button>
+                <button class="btn-cancel" onclick="hideCrsForm()">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Course Table -->
+        <table id="crsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Course Name</th>
+                    <th>Duration</th>
+                    <th>Instructor</th>
+                    <th>Fee</th>
+                    <th>Seats</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="crsBody"></tbody>
+        </table>
+    </div>
+
+    <!-- ── STUDENTS SECTION ── -->
+    <div id="students" class="section hidden">
+        <div class="section-header">
+            <h2>Students</h2>
+            <button class="btn-add" onclick="showStdForm()">+ Add Student</button>
+        </div>
+
+        <!-- Search and Filter -->
+        <div class="search-bar">
+            <input type="text" id="searchName" placeholder="Search by name...">
+            <button onclick="searchStudents()">Search</button>
+            <input type="text" id="filterCrs" placeholder="Filter by course...">
+            <button onclick="filterStudents()">Filter</button>
+            <button onclick="loadStudents()">Show All</button>
+        </div>
+
+        <!-- Student Form -->
+        <div id="stdForm" class="form-box hidden">
+            <h3 id="stdFormTitle">Add Student</h3>
+            <input type="hidden" id="stdId">
+            <input type="text" id="stdName" placeholder="Student Name *">
+            <input type="email" id="stdEmail" placeholder="Email *">
+            <input type="text" id="stdPhone" placeholder="Phone Number">
+            <select id="stdStatus">
+                <option value="ACTIVE">Active</option>
+                <option value="INACTIVE">Inactive</option>
+            </select>
+            <select id="stdCourse">
+                <option value="">-- Select Course --</option>
+            </select>
+            <div class="form-btns">
+                <button class="btn-save" onclick="saveStudent()">Save</button>
+                <button class="btn-cancel" onclick="hideStdForm()">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Student Table -->
+        <table id="stdTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Course</th>
+                    <th>Enrolled</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="stdBody"></tbody>
+        </table>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
