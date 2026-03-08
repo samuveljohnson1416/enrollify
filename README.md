@@ -3,8 +3,8 @@
 I built this project as part of my training assessment. It is a full stack web application where college staff can manage courses and enroll students into them. The system automatically reduces seats when a student is enrolled and blocks enrollment if no seats are available.
 
 ---
-D:\GitHub\scrs\screenshots\crs.png
-D:\GitHub\scrs\screenshots\std.png
+![Dashboard](screenshots/crs.png)
+![Dashboard](screenshots/std.png)
 ## What I Used
 
 - Java 17
